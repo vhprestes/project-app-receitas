@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import profiler from '../images/profileIcon.svg';
 import search from '../images/searchIcon.svg';
+// import InputSearch from './InputSearch';
+import SearchBar from './SearchBar';
 
 // import { Container } from './styles';
 
 function Header({ title, hasSearch }) {
+  const [isSearch, setIsSearch] = useState(false);
+  const handleSearch = () => (!isSearch ? setIsSearch(true) : setIsSearch(false));
   return (
     <div>
-      <img src={ profiler } alt="icone-perfil" data-testid="profile-top-btn" />
+      <Link to="/profile">
+        <img src={ profiler } alt="icone-perfil" data-testid="profile-top-btn" />
+      </Link>
       <h1 data-testid="page-title">{title}</h1>
       {hasSearch && (
-        <img src={ search } alt="icone-search" data-testid="search-top-btn" />
+        <div>
+          <button type="button" onClick={ handleSearch }>
+            <img
+              src={ search }
+              alt="icone-search"
+              data-testid="search-top-btn"
+            />
+          </button>
+          {isSearch && <SearchBar /> }
+        </div>
       )}
     </div>
   );
