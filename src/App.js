@@ -1,14 +1,16 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ProviderRecipes from './context/Provider';
 import Routes from './routes/Routes';
 
 function App() {
   return (
-    <ProviderRecipes>
-      <Routes />
-    </ProviderRecipes>
+    <BrowserRouter>
+      <ProviderRecipes>
+        <Routes />
+      </ProviderRecipes>
+    </BrowserRouter>
   );
 }
 
