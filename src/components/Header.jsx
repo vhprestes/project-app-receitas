@@ -12,7 +12,7 @@ function Header({ title, hasSearch }) {
   const [isSearch, setIsSearch] = useState(false);
   const handleSearch = () => (!isSearch ? setIsSearch(true) : setIsSearch(false));
   return (
-    <div>
+    <div className="header-pai">
       <Link to="/profile">
         <img src={ profiler } alt="icone-perfil" data-testid="profile-top-btn" />
       </Link>
