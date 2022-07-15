@@ -6,7 +6,8 @@ import renderWithRouter from './renderWithRouter';
 
 describe('Testando o component do Header', () => {
     it('Teste se os elementos estão na tela', () => {
-        renderWithRouter(<App />);
+        const { history } = renderWithRouter(<App />);
+        history.push('/foods');
         const imgPerfil = screen.getByTestId('profile-top-btn');
         const imgLupa = screen.getByTestId('search-top-btn');
         const titleHeader = screen.getByTestId('page-title');
@@ -18,6 +19,7 @@ describe('Testando o component do Header', () => {
 
     it('Testando o redirecionamento do botão', () => {
         const { history } = renderWithRouter(<App />)
+        history.push('/foods');
         const imgPerfil = screen.getByTestId('profile-top-btn');
 
         userEvent.click(imgPerfil);
@@ -25,15 +27,16 @@ describe('Testando o component do Header', () => {
     })
 
     it('Testando o click do botão de Buscar', () => {
-        renderWithRouter(<App />)
+        const { history } = renderWithRouter(<App />)
+        history.push('/foods');
+        const imgLupa = screen.getByTestId('search-top-btn');
+        
+        userEvent.click(imgLupa);
         const radioIngredient = screen.getByTestId('ingredient-search-radio');
-        const radioName = screen.getByTestId('name-search-radio"');
+        const inputSearch = screen.getByTestId('search-input');
+        const radioName = screen.getByTestId('name-search-radio');
         const radioFirstLetter = screen.getByTestId('first-letter-search-radio');
         const btnSearch = screen.getByTestId('exec-search-btn');
-        const imgLupa = screen.getByTestId('search-top-btn');
-        const inputSearch = screen.getByTestId('search-input');
-
-        userEvent.click(imgLupa);
         expect(radioIngredient).toBeInTheDocument();
         expect(radioName).toBeInTheDocument();
         expect(radioFirstLetter).toBeInTheDocument();
