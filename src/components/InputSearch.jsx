@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import Context from '../context/context';
 
 function InputSearch() {
+  const { setInputSearch } = useContext(Context);
+  const handleChanges = ({ target: { value } }) => {
+    setInputSearch(value);
+  };
   return (
     <div>
-      <input type="text" id="input-search" data-testid="search-input" />
+      <input
+        type="text"
+        id="input-search"
+        name="inputSearch"
+        data-testid="search-input"
+        onChange={ handleChanges }
+      />
     </div>
   );
 }
