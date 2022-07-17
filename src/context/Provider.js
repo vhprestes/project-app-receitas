@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Context from './context';
 
 function ProviderRecipes({ children }) {
+  const message = 'Sorry, we haven\'t found any recipes for these filters.';
   const history = useHistory();
   const [loginInput, setLogin] = useState({
     email: '',
@@ -27,9 +28,8 @@ function ProviderRecipes({ children }) {
       return setDisabledBtn(true);
     }
   };
-
-  useEffect(() => {
-    const getFoods = async () => {
+  const getFoods = async () => {
+    try {
       if (radios === 'ingredient') {
         const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchBtn}`;
         const getFetch = await fetch(url);
@@ -37,6 +37,10 @@ function ProviderRecipes({ children }) {
         const json = dataJson;
         setFoodsResponse(json);
       }
+    } catch (error) {
+      global.alert(message, error);
+    }
+    try {
       if (radios === 'name') {
         const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchBtn}`;
         const getFetch = await fetch(url);
@@ -44,6 +48,10 @@ function ProviderRecipes({ children }) {
         const json = dataJson.meals.filter((_, i) => i < '12');
         setFoodsResponse(json);
       }
+    } catch (error) {
+      global.alert(message, error);
+    }
+    try {
       if (radios === 'firstLetter' && searchBtn.length === 1) {
         const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchBtn}`;
         const getFetch = await fetch(url);
@@ -51,18 +59,18 @@ function ProviderRecipes({ children }) {
         const json = dataJson.meals.filter((_, i) => i < '12');
         setFoodsResponse(json);
       }
-      if (radios === 'firstLetter' && searchBtn.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
-      }
-      return null;
-    };
-    if (history.location.pathname === '/foods') {
-      getFoods();
+    } catch (error) {
+      global.alert(message, error);
     }
-  }, [history.location.pathname, searchBtn]);
 
-  useEffect(() => {
-    const getDrinks = async () => {
+    if (radios === 'firstLetter' && searchBtn.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    }
+    return null;
+  };
+
+  const getDrinks = async () => {
+    try {
       if (radios === 'ingredient') {
         const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchBtn}`;
         const getFetch = await fetch(url);
@@ -70,6 +78,10 @@ function ProviderRecipes({ children }) {
         const json = dataJson.drinks.filter((_, i) => i < '12');
         setDrinksResponse(json);
       }
+    } catch (error) {
+      global.alert(message, error);
+    }
+    try {
       if (radios === 'name') {
         const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchBtn}`;
         const getFetch = await fetch(url);
@@ -77,6 +89,10 @@ function ProviderRecipes({ children }) {
         const json = dataJson.drinks.filter((_, i) => i < '12');
         setDrinksResponse(json);
       }
+    } catch (error) {
+      global.alert(message, error);
+    }
+    try {
       if (radios === 'firstLetter' && searchBtn.length === 1) {
         const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchBtn}`;
         const getFetch = await fetch(url);
@@ -84,11 +100,22 @@ function ProviderRecipes({ children }) {
         const json = dataJson.drinks.filter((_, i) => i < '12');
         setDrinksResponse(json);
       }
-      if (radios === 'firstLetter' && searchBtn.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
-      }
-      return null;
-    };
+    } catch (error) {
+      global.alert(message, error);
+    }
+    if (radios === 'firstLetter' && searchBtn.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    if (history.location.pathname === '/foods') {
+      getFoods();
+    }
+  }, [history.location.pathname, searchBtn]);
+
+  useEffect(() => {
     if (history.location.pathname === '/drinks') {
       getDrinks();
     }
