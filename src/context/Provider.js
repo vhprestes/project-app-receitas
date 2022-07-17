@@ -41,14 +41,14 @@ function ProviderRecipes({ children }) {
         const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchBtn}`;
         const getFetch = await fetch(url);
         const dataJson = await getFetch.json();
-        const json = dataJson;
+        const json = dataJson.meals.filter((_, i) => i < '12');
         setFoodsResponse(json);
       }
       if (radios === 'firstLetter' && searchBtn.length === 1) {
         const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchBtn}`;
         const getFetch = await fetch(url);
         const dataJson = await getFetch.json();
-        const json = dataJson;
+        const json = dataJson.meals.filter((_, i) => i < '12');
         setFoodsResponse(json);
       }
       if (radios === 'firstLetter' && searchBtn.length > 1) {
@@ -67,19 +67,22 @@ function ProviderRecipes({ children }) {
         const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchBtn}`;
         const getFetch = await fetch(url);
         const dataJson = await getFetch.json();
-        setDrinksResponse(dataJson);
+        const json = dataJson.drinks.filter((_, i) => i < '12');
+        setDrinksResponse(json);
       }
       if (radios === 'name') {
         const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchBtn}`;
         const getFetch = await fetch(url);
         const dataJson = await getFetch.json();
-        setDrinksResponse(dataJson);
+        const json = dataJson.drinks.filter((_, i) => i < '12');
+        setDrinksResponse(json);
       }
       if (radios === 'firstLetter' && searchBtn.length === 1) {
         const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchBtn}`;
         const getFetch = await fetch(url);
         const dataJson = await getFetch.json();
-        setDrinksResponse(dataJson);
+        const json = dataJson.drinks.filter((_, i) => i < '12');
+        setDrinksResponse(json);
       }
       if (radios === 'firstLetter' && searchBtn.length > 1) {
         global.alert('Your search must have only 1 (one) character');

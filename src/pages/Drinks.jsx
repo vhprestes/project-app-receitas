@@ -12,16 +12,26 @@ function Drinks() {
   const { drinksResponse } = useContext(Context);
 
   useEffect(() => {
-    const newResposeDrinks = Object.entries(drinksResponse);
-    console.log(newResposeDrinks);
-    if (newResposeDrinks.length === 1) {
-      history.push(`/drinks/${newResposeDrinks[0][1][0].idDrink}`);
+    if (drinksResponse.length === 1) {
+      history.push(`/drinks/${drinksResponse[0].idDrink}`);
     }
   }, [drinksResponse, history]);
 
   return (
     <div>
       <Header title={ drinks } hasSearch={ bool } />
+      <div>
+        {drinksResponse.map((item, i) => (
+          <div data-testid={ `${i}-recipe-card` } key={ i }>
+            <img
+              src={ item.strDrinkThumb }
+              alt="foto-receita"
+              data-testid={ `${i}-card-img` }
+            />
+            <h2 data-testid={ `${i}-card-name` }>{item.strDrink}</h2>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
