@@ -5,7 +5,7 @@ import Context from '../context/context';
 // import { Container } from './styles';
 
 function SearchBar() {
-  const { setRadios } = useContext(Context);
+  const { setRadios, handleSubmit } = useContext(Context);
 
   return (
     <div>
@@ -42,6 +42,7 @@ function SearchBar() {
       <button
         type="button"
         data-testid="exec-search-btn"
+        onClick={ handleSubmit }
       >
         Buscar
 

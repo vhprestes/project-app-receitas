@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import ProviderRecipes from './context/Provider';
 import Routes from './routes/Routes';
 
