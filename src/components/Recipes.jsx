@@ -5,7 +5,16 @@ import Context from '../context/context';
 // import { Container } from './styles';
 
 function Recipes() {
-  const { setTwelveFood, setTwelveDrink, twelveFood, twelveDrink } = useContext(Context);
+  const {
+    setTwelveFood,
+    setTwelveDrink,
+    twelveFood,
+    twelveDrink,
+    setBtnFetchFood,
+    setBtnFetchDrink,
+    btnFetchDrink,
+    btnFetchFood,
+  } = useContext(Context);
   const history = useHistory();
 
   const twelveFetchFood = async () => {
@@ -24,16 +33,60 @@ function Recipes() {
     setTwelveDrink(json);
   };
 
+  const handleBtnFetchFood = async () => {
+    const url = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+    const getFetch = await fetch(url);
+    const dataJson = await getFetch.json();
+    const json = dataJson.meals.filter((_, i) => i < '5');
+    setBtnFetchFood(json);
+  };
+
+  const handleBtnFetchDrink = async () => {
+    const url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+    const getFetch = await fetch(url);
+    const dataJson = await getFetch.json();
+    const json = dataJson.drinks.filter((_, i) => i < '5');
+    setBtnFetchDrink(json);
+  };
+
   useEffect(() => {
     if (history.location.pathname === '/foods') {
       twelveFetchFood();
+      handleBtnFetchFood();
+      setBtnFetchDrink([]);
+      setTwelveDrink([]);
     }
     if (history.location.pathname === '/drinks') {
       twelveFetchDrink();
+      handleBtnFetchDrink();
+      setBtnFetchFood([]);
+      setTwelveFood([]);
     }
   }, []);
+
   return (
     <div>
+      {btnFetchFood.map((item, i) => (
+        <div key={ i }>
+          <button
+            type="button"
+            data-testid={ `${item.strCategory}-category-filter` }
+          >
+            {item.strCategory}
+          </button>
+        </div>
+      ))}
+      {btnFetchDrink.map((item, i) => (
+        <div key={ i }>
+          <button
+            type="button"
+            data-testid={ `${item.strCategory}-category-filter` }
+            className="drinkBtn"
+          >
+            {item.strCategory}
+          </button>
+        </div>
+      ))}
       <div>
         {twelveFood.map((item, i) => (
           <div data-testid={ `${i}-recipe-card` } key={ i }>
