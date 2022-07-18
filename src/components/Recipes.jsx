@@ -14,6 +14,10 @@ function Recipes() {
     setBtnFetchDrink,
     btnFetchDrink,
     btnFetchFood,
+    setBtnAll,
+    btnAll,
+    setBtnAllDrinks,
+    btnAllDrinks,
   } = useContext(Context);
   const history = useHistory();
 
@@ -21,6 +25,7 @@ function Recipes() {
     const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const getFetch = await fetch(url);
     const dataJson = await getFetch.json();
+    setBtnAll(dataJson.meals);
     const json = dataJson.meals.filter((_, i) => i < '12');
     setTwelveFood(json);
   };
@@ -29,6 +34,7 @@ function Recipes() {
     const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     const getFetch = await fetch(url);
     const dataJson = await getFetch.json();
+    setBtnAllDrinks(dataJson.drinks);
     const json = dataJson.drinks.filter((_, i) => i < '12');
     setTwelveDrink(json);
   };
@@ -64,30 +70,66 @@ function Recipes() {
     }
   }, []);
 
+  const handleClickCategoryFood = async ({ target }) => {
+    const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.innerText}`;
+    const getFetch = await fetch(url);
+    const dataJson = await getFetch.json();
+    const json = dataJson.meals.filter((_, i) => i < '12');
+    setTwelveFood(json);
+  };
+
+  const handleClickCategoryDrink = async ({ target }) => {
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${target.innerText}`;
+    const getFetch = await fetch(url);
+    const dataJson = await getFetch.json();
+    const json = dataJson.drinks.filter((_, i) => i < '12');
+    setTwelveDrink(json);
+  };
+
+  const handleBtnAllFood = () => {
+    if (history.location.pathname === '/foods') {
+      setTwelveFood(btnAll.filter((_, i) => i < '12'));
+    }
+    if (history.location.pathname === '/drinks') {
+      setTwelveDrink(btnAllDrinks.filter((_, i) => i < '12'));
+    }
+  };
+
   return (
-    <div>
-      {btnFetchFood.map((item, i) => (
-        <div key={ i }>
-          <button
-            type="button"
-            data-testid={ `${item.strCategory}-category-filter` }
-          >
-            {item.strCategory}
-          </button>
-        </div>
-      ))}
-      {btnFetchDrink.map((item, i) => (
-        <div key={ i }>
-          <button
-            type="button"
-            data-testid={ `${item.strCategory}-category-filter` }
-            className="drinkBtn"
-          >
-            {item.strCategory}
-          </button>
-        </div>
-      ))}
-      <div>
+    <div className="recipes-page">
+      <div className="btns">
+        {btnFetchFood.map((item, i) => (
+          <div key={ i } className="btnMeals">
+            <button
+              type="button"
+              data-testid={ `${item.strCategory}-category-filter` }
+              onClick={ handleClickCategoryFood }
+            >
+              {item.strCategory}
+            </button>
+          </div>
+        ))}
+        {btnFetchDrink.map((item, i) => (
+          <div key={ i }>
+            <button
+              type="button"
+              data-testid={ `${item.strCategory}-category-filter` }
+              className="drinkBtn"
+              onClick={ handleClickCategoryDrink }
+            >
+              {item.strCategory}
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={ handleBtnAllFood }
+          data-testid="All-category-filter"
+        >
+          All
+        </button>
+      </div>
+      <div className="itens">
         {twelveFood.map((item, i) => (
           <div data-testid={ `${i}-recipe-card` } key={ i }>
             <img
@@ -98,17 +140,17 @@ function Recipes() {
             <h2 data-testid={ `${i}-card-name` }>{item.strMeal}</h2>
           </div>
         ))}
+        {twelveDrink.map((item, i) => (
+          <div data-testid={ `${i}-recipe-card` } key={ i }>
+            <img
+              src={ item.strDrinkThumb }
+              alt="foto-receita"
+              data-testid={ `${i}-card-img` }
+            />
+            <h2 data-testid={ `${i}-card-name` }>{item.strDrink}</h2>
+          </div>
+        ))}
       </div>
-      {twelveDrink.map((item, i) => (
-        <div data-testid={ `${i}-recipe-card` } key={ i }>
-          <img
-            src={ item.strDrinkThumb }
-            alt="foto-receita"
-            data-testid={ `${i}-card-img` }
-          />
-          <h2 data-testid={ `${i}-card-name` }>{item.strDrink}</h2>
-        </div>
-      ))}
     </div>
   );
 }

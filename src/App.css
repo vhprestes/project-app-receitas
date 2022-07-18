@@ -60,3 +60,34 @@
 .son-footer img {
   margin-left: 5.5rem;
 }
+
+.btns {
+  align-items: center;
+  display: flex;
+}
+
+.btns button {
+  margin: 2rem 0.8rem;
+}
+
+.recipes-page img {
+  width: 35vw;
+}
+
+.itens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.itens div {
+  background-color: rgb(211, 106, 7);
+  border-radius: 5px;
+  margin: 0.3rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.itens img {
+  border-radius: 5px;
+}
