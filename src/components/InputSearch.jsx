@@ -11,6 +11,7 @@ function InputSearch() {
       <input
         type="text"
         id="input-search"
+        className="input-search"
         name="inputSearch"
         data-testid="search-input"
         onChange={ handleChanges }

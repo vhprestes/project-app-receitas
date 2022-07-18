@@ -6,12 +6,57 @@
 
 .header-pai {
   align-items: center;
+  background-color: darkgoldenrod;
   display: flex;
-  height: 10vh;
+  height: 8vh;
   justify-content: space-around;
 }
 
-.header-pai button {
-  background-color: white;
+.lupa {
+  background-color: darkgoldenrod;
   border: none;
+}
+
+.search-bar {
+  margin-left: -17rem;
+  position: absolute;
+  top: 100px;
+}
+
+.radios input {
+  margin-right: 1.3rem;
+}
+
+.buscar-btn {
+  background-color: darkgoldenrod;
+  border: none;
+  border-radius: 5px;
+  height: 3vh;
+  margin-left: 1.5rem;
+  width: 18vw;
+}
+
+.pesquisa {
+  margin-top: 1rem;
+}
+
+.pesquisa input {
+  border-radius: 5px;
+  height: 3vh;
+}
+
+.footer {
+  align-items: center;
+  background-color: darkgoldenrod;
+  bottom: 0;
+  display: flex;
+  height: 9vh;
+  justify-content: space-between;
+  left: 0;
+  position: fixed;
+  right: 0;
+}
+
+.son-footer img {
+  margin-left: 5.5rem;
 }

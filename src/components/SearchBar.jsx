@@ -1,52 +1,68 @@
 import React, { useContext } from 'react';
-import InputSearch from './InputSearch';
 import Context from '../context/context';
 
 // import { Container } from './styles';
 
 function SearchBar() {
-  const { setRadios } = useContext(Context);
+  const { setRadios, handleSubmit, setInputSearch } = useContext(Context);
+  const handleChanges = ({ target: { value } }) => {
+    setInputSearch(value);
+  };
 
   return (
-    <div>
-      <label htmlFor="radio-ingredient">
-        Ingrediente:
+    <div className="search-bar">
+      <div className="radios">
+        <label htmlFor="radio-ingredient">
+          Ingrediente:
+          <input
+            type="radio"
+            id="ingredient"
+            data-testid="ingredient-search-radio"
+            name="radio"
+            onChange={ () => setRadios('ingredient') }
+          />
+        </label>
+        <label htmlFor="radio-name">
+          Nome:
+          <input
+            type="radio"
+            id="name"
+            data-testid="name-search-radio"
+            name="radio"
+            onChange={ () => setRadios('name') }
+          />
+        </label>
+        <label htmlFor="first-letter">
+          Primeira letra:
+          <input
+            type="radio"
+            id="firstLetter"
+            data-testid="first-letter-search-radio"
+            name="radio"
+            onChange={ () => setRadios('firstLetter') }
+          />
+        </label>
+      </div>
+      <div className="pesquisa">
         <input
-          type="radio"
-          id="ingredient"
-          data-testid="ingredient-search-radio"
-          name="radio"
-          onChange={ () => setRadios('ingredient') }
+          type="text"
+          id="input-search"
+          className="input-search"
+          name="inputSearch"
+          data-testid="search-input"
+          onChange={ handleChanges }
         />
-      </label>
-      <label htmlFor="radio-name">
-        Nome:
-        <input
-          type="radio"
-          id="name"
-          data-testid="name-search-radio"
-          name="radio"
-          onChange={ () => setRadios('name') }
-        />
-      </label>
-      <label htmlFor="first-letter">
-        Primeira letra:
-        <input
-          type="radio"
-          id="firstLetter"
-          data-testid="first-letter-search-radio"
-          name="radio"
-          onChange={ () => setRadios('firstLetter') }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-      >
-        Buscar
+        <button
+          type="button"
+          data-testid="exec-search-btn"
+          className="buscar-btn"
+          onClick={ handleSubmit }
+        >
+          Buscar
 
-      </button>
-      <InputSearch />
+        </button>
+
+      </div>
     </div>
   );
 }

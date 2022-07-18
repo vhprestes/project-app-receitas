@@ -19,7 +19,7 @@ function Header({ title, hasSearch }) {
       <h1 data-testid="page-title">{title}</h1>
       {hasSearch && (
         <div>
-          <button type="button" onClick={ handleSearch }>
+          <button type="button" onClick={ handleSearch } className="lupa">
             <img
               src={ search }
               alt="icone-search"
