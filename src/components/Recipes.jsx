@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/context';
 
@@ -19,6 +19,7 @@ function Recipes() {
     setBtnAllDrinks,
     btnAllDrinks,
   } = useContext(Context);
+  const [isSearch, setIsSearch] = useState(false);
   const history = useHistory();
 
   const twelveFetchFood = async () => {
@@ -70,12 +71,27 @@ function Recipes() {
     }
   }, []);
 
+  const handleBtnAllFood = () => {
+    if (history.location.pathname === '/foods') {
+      setTwelveFood(btnAll.filter((_, i) => i < '12'));
+    }
+    if (history.location.pathname === '/drinks') {
+      setTwelveDrink(btnAllDrinks.filter((_, i) => i < '12'));
+    }
+  };
+
   const handleClickCategoryFood = async ({ target }) => {
     const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${target.innerText}`;
     const getFetch = await fetch(url);
     const dataJson = await getFetch.json();
     const json = dataJson.meals.filter((_, i) => i < '12');
     setTwelveFood(json);
+    if (!isSearch) {
+      setIsSearch(true);
+    } else {
+      setIsSearch(false);
+      handleBtnAllFood();
+    }
   };
 
   const handleClickCategoryDrink = async ({ target }) => {
@@ -84,14 +100,11 @@ function Recipes() {
     const dataJson = await getFetch.json();
     const json = dataJson.drinks.filter((_, i) => i < '12');
     setTwelveDrink(json);
-  };
-
-  const handleBtnAllFood = () => {
-    if (history.location.pathname === '/foods') {
-      setTwelveFood(btnAll.filter((_, i) => i < '12'));
-    }
-    if (history.location.pathname === '/drinks') {
-      setTwelveDrink(btnAllDrinks.filter((_, i) => i < '12'));
+    if (!isSearch) {
+      setIsSearch(true);
+    } else {
+      setIsSearch(false);
+      handleBtnAllFood();
     }
   };
 
