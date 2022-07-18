@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 import Context from '../context/context';
 
 // import { Container } from './styles';
@@ -33,6 +34,7 @@ function Drinks() {
           </div>
         ))}
       </div>
+      <Recipes />
       <Footer />
     </div>
   );

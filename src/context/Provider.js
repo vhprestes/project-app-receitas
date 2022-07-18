@@ -17,6 +17,8 @@ function ProviderRecipes({ children }) {
   console.log(searchBtn);
   const [foodsResponse, setFoodsResponse] = useState([]);
   const [drinksResponse, setDrinksResponse] = useState([]);
+  const [twelveFood, setTwelveFood] = useState([]);
+  const [twelveDrink, setTwelveDrink] = useState([]);
 
   const handleChange = ({ target: { name, value } }) => {
     setLogin((oldState) => ({ ...oldState, [name]: value }));
@@ -135,6 +137,10 @@ function ProviderRecipes({ children }) {
     foodsResponse,
     drinksResponse,
     handleSubmit,
+    setTwelveFood,
+    twelveFood,
+    setTwelveDrink,
+    twelveDrink,
   };
 
   return (
