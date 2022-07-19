@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Context from '../context/context';
 
 // import { Container } from './styles';
@@ -40,7 +40,7 @@ function DrinkId() {
     const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const response = await fetch(url);
     const data = await response.json();
-    setFood(data);
+    setFood(data.meals.filter((_, i) => i < '6'));
   };
 
   console.log(foodArray);
@@ -69,7 +69,23 @@ function DrinkId() {
           )}
           <p data-testid="instructions">{fetchIdDrink.strInstructions}</p>
         </ol>
-        <div data-testid="0-recomendation-card">Recomendações</div>
+        <div className="recommendationItens">
+          {foodArray.map((item, i) => (
+            <div data-testid={ `${i}-recomendation-card` } key={ i }>
+              <Link to={ `/foods/${item.idMeal}` } key={ i }>
+                <div data-testid={ `${i}-recipe-card` }>
+                  <img
+                    src={ item.strMealThumb }
+                    alt="foto-receita"
+                    data-testid={ `${i}-card-img` }
+                    className="recommendationImage"
+                  />
+                  <h2 data-testid={ `${i}-recomendation-title` }>{item.strMeal}</h2>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

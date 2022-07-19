@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Context from '../context/context';
 
 // import { Container } from './styles';
@@ -39,11 +39,10 @@ function FoodsId() {
     const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
     const response = await fetch(url);
     const data = await response.json();
-    setDrink(data);
+    setDrink(data.drinks.filter((_, i) => i < '6'));
   };
 
   console.log(fetchId);
-  console.log('drink', drinkArray);
   useEffect(() => {
     handleFetchIdFood();
     recommendationFetch();
@@ -74,7 +73,23 @@ function FoodsId() {
           src={ fetchId.strYoutube.replace('watch?v=', 'embed/') }
           data-testid="video"
         /> }
-        <div data-testid="0-recomendation-card">Recomendações</div>
+        <div className="recommendationItens">
+          {drinkArray.map((item, i) => (
+            <div data-testid={ `${i}-recomendation-card` } key={ i }>
+              <Link to={ `/drinks/${item.idDrink}` } key={ i }>
+                <div data-testid={ `${i}-recipe-card` }>
+                  <img
+                    src={ item.strDrinkThumb }
+                    alt="foto-receita"
+                    data-testid={ `${i}-card-img` }
+                    className="recommendationImage"
+                  />
+                  <h2 data-testid={ `${i}-recomendation-title` }>{item.strDrink}</h2>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
