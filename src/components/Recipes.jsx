@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Context from '../context/context';
 
 // import { Container } from './styles';
@@ -144,24 +144,28 @@ function Recipes() {
       </div>
       <div className="itens">
         {twelveFood.map((item, i) => (
-          <div data-testid={ `${i}-recipe-card` } key={ i }>
-            <img
-              src={ item.strMealThumb }
-              alt="foto-receita"
-              data-testid={ `${i}-card-img` }
-            />
-            <h2 data-testid={ `${i}-card-name` }>{item.strMeal}</h2>
-          </div>
+          <Link to={ `/foods/${item.idMeal}` } key={ i }>
+            <div data-testid={ `${i}-recipe-card` }>
+              <img
+                src={ item.strMealThumb }
+                alt="foto-receita"
+                data-testid={ `${i}-card-img` }
+              />
+              <h2 data-testid={ `${i}-card-name` }>{item.strMeal}</h2>
+            </div>
+          </Link>
         ))}
         {twelveDrink.map((item, i) => (
-          <div data-testid={ `${i}-recipe-card` } key={ i }>
-            <img
-              src={ item.strDrinkThumb }
-              alt="foto-receita"
-              data-testid={ `${i}-card-img` }
-            />
-            <h2 data-testid={ `${i}-card-name` }>{item.strDrink}</h2>
-          </div>
+          <Link to={ `/drinks/${item.idDrink}` } key={ i }>
+            <div data-testid={ `${i}-recipe-card` }>
+              <img
+                src={ item.strDrinkThumb }
+                alt="foto-receita"
+                data-testid={ `${i}-card-img` }
+              />
+              <h2 data-testid={ `${i}-card-name` }>{item.strDrink}</h2>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

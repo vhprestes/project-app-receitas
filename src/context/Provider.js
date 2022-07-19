@@ -22,6 +22,8 @@ function ProviderRecipes({ children }) {
   const [btnFetchDrink, setBtnFetchDrink] = useState([]);
   const [btnAll, setBtnAll] = useState([]);
   const [btnAllDrinks, setBtnAllDrinks] = useState([]);
+  const [fetchId, setFetchId] = useState([]);
+  const [fetchIdDrink, setFetchIdDrink] = useState([]);
 
   const handleChange = ({ target: { name, value } }) => {
     setLogin((oldState) => ({ ...oldState, [name]: value }));
@@ -153,6 +155,10 @@ function ProviderRecipes({ children }) {
     btnAll,
     btnAllDrinks,
     setBtnAllDrinks,
+    fetchId,
+    setFetchId,
+    fetchIdDrink,
+    setFetchIdDrink,
   };
 
   return (
