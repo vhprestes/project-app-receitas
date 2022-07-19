@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Context from '../context/context';
 
 // import { Container } from './styles';
 
 function FoodsId() {
   const { setFetchId, fetchId } = useContext(Context);
-  const [ingredientsArrayFood, setIngredientsArrayFood] = useState([]);
-  const [urlYou, setUrl] = useState('');
   const { id } = useParams();
+
+  const [ingredientsArrayFood, setIngredientsArrayFood] = useState([]);
+  const [amountArray, setAmmount] = useState([]);
+  const [drinkArray, setDrink] = useState([]);
+
   const handleFetchIdFood = async () => {
     const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
     const getFetch = await fetch(url);
@@ -20,14 +23,29 @@ function FoodsId() {
       }
       return acc;
     }, []);
+    const ammoutReduce = Object.entries(responseIdArrayFood).reduce((acc, item) => {
+      if (item[0].includes('strMeasure')) {
+        acc.push(item[1]);
+      }
+      return acc;
+    }, []);
+
+    setAmmount(ammoutReduce);
     setIngredientsArrayFood(reduce);
     setFetchId(responseIdArrayFood);
+  };
+
+  const recommendationFetch = async () => {
+    const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    const response = await fetch(url);
+    const data = await response.json();
+    setDrink(data.drinks.filter((_, i) => i < '6'));
   };
 
   console.log(fetchId);
   useEffect(() => {
     handleFetchIdFood();
-    setUrl(fetchId.strYoutube.replace('watch?v=', 'embed/'));
+    recommendationFetch();
   }, []);
   return (
     <div>
@@ -44,16 +62,34 @@ function FoodsId() {
           {ingredientsArrayFood.map(
             (item, i) => item && (
               <li data-testid={ `${i}-ingredient-name-and-measure` } key={ i }>
-                {item}
+                {`${amountArray[i]} ${item}`}
               </li>
             ),
           )}
           <p data-testid="instructions">{fetchId.strInstructions}</p>
         </ol>
-        {fetchId ? (<iframe
-          src={ urlYou }
-          title="video"
-        />) : (<p>ai pai para</p>)}
+        { fetchId.strYoutube && <iframe
+          title="youtube"
+          src={ fetchId.strYoutube.replace('watch?v=', 'embed/') }
+          data-testid="video"
+        /> }
+        <div className="recommendationItens">
+          {drinkArray.map((item, i) => (
+            <div data-testid={ `${i}-recomendation-card` } key={ i }>
+              <Link to={ `/drinks/${item.idDrink}` } key={ i }>
+                <div data-testid={ `${i}-recipe-card` }>
+                  <img
+                    src={ item.strDrinkThumb }
+                    alt="foto-receita"
+                    data-testid={ `${i}-card-img` }
+                    className="recommendationImage"
+                  />
+                  <h2 data-testid={ `${i}-recomendation-title` }>{item.strDrink}</h2>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

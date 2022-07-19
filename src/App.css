@@ -100,3 +100,14 @@
 .details-img-drink {
   width: 20vw;
 }
+
+.recommendationImage {
+  padding: 2vw;
+  width: 55vw;
+}
+
+.recommendationItens {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
