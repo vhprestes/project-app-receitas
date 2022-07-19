@@ -14,9 +14,16 @@ function ProviderRecipes({ children }) {
   const [radios, setRadios] = useState('');
   const [inputSearch, setInputSearch] = useState('');
   const [searchBtn, setInputSearchBtn] = useState('');
-  console.log(searchBtn);
   const [foodsResponse, setFoodsResponse] = useState([]);
   const [drinksResponse, setDrinksResponse] = useState([]);
+  const [twelveFood, setTwelveFood] = useState([]);
+  const [twelveDrink, setTwelveDrink] = useState([]);
+  const [btnFetchFood, setBtnFetchFood] = useState([]);
+  const [btnFetchDrink, setBtnFetchDrink] = useState([]);
+  const [btnAll, setBtnAll] = useState([]);
+  const [btnAllDrinks, setBtnAllDrinks] = useState([]);
+  const [fetchId, setFetchId] = useState([]);
+  const [fetchIdDrink, setFetchIdDrink] = useState([]);
 
   const handleChange = ({ target: { name, value } }) => {
     setLogin((oldState) => ({ ...oldState, [name]: value }));
@@ -135,6 +142,23 @@ function ProviderRecipes({ children }) {
     foodsResponse,
     drinksResponse,
     handleSubmit,
+    setTwelveFood,
+    twelveFood,
+    setTwelveDrink,
+    twelveDrink,
+    btnFetchFood,
+    setBtnFetchFood,
+    btnFetchDrink,
+    setBtnFetchDrink,
+    setFoodsResponse,
+    setBtnAll,
+    btnAll,
+    btnAllDrinks,
+    setBtnAllDrinks,
+    fetchId,
+    setFetchId,
+    fetchIdDrink,
+    setFetchIdDrink,
   };
 
   return (

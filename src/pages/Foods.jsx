@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 import Context from '../context/context';
 
 function Foods() {
@@ -9,7 +10,6 @@ function Foods() {
   const { foodsResponse } = useContext(Context);
   const bool = true;
   const foods = 'Foods';
-  console.log('sou eu', foodsResponse);
 
   useEffect(() => {
     if (foodsResponse.length === 1) {
@@ -32,6 +32,7 @@ function Foods() {
           </div>
         ))}
       </div>
+      <Recipes />
       <Footer />
     </div>
   );
