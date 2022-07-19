@@ -102,12 +102,12 @@
 }
 
 .recommendationImage {
-  width: 55vw;
   padding: 2vw;
+  width: 55vw;
 }
 
 .recommendationItens {
-  overflow-y: hidden;
-  overflow-x: scroll;
   display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
